@@ -27,6 +27,7 @@ export const metadata: Metadata = {
   description: "BookWise is a book borrowing university library management solution.",
 }
 
+/** Layout principal da aplicação. */
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${ibmPlexSans.className} antialiased`}>{children}</body>
+      <body className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}>{children}</body>
     </html>
   )
 }
