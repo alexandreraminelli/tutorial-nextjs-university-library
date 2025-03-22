@@ -4,9 +4,13 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Typography */
   --font-sans: "IBM Plex Sans", sans-serif;
   --font-bebas-neue: var(--bebas-neue);
-  
+
+  /* Media queries (screen sizes) */
+  --breakpoint-xs: 480px;
+
   /* Cores principais do tema */
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -29,7 +33,7 @@
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
-  
+
   /* Cores para gráficos */
   --color-chart-1: hsl(var(--chart-1));
   --color-chart-2: hsl(var(--chart-2));
@@ -38,43 +42,43 @@
   --color-chart-5: hsl(var(--chart-5));
 
   /* Cores personalizadas */
-  --color-primary: #E7C9A5;
-  --color-primary-admin: #25388C;
-  
+  --color-primary: #e7c9a5;
+  --color-primary-admin: #25388c;
+
   /* Paleta de cores auxiliares */
-  --color-green: #027A48;
-  --color-green-100: #ECFDF3;
-  --color-green-400: #4C7B62;
-  --color-green-500: #2CC171;
-  --color-green-800: #027A48;
-  
-  --color-red: #EF3A4B;
-  --color-red-400: #F46F70;
-  --color-red-500: #E27233;
-  --color-red-800: #EF3A4B;
-  
-  --color-blue-100: #0089F1;
-  
-  --color-light-100: #D6E0FF;
-  --color-light-200: #EED1AC;
-  --color-light-300: #F8F8FF;
-  --color-light-400: #EDF1F1;
-  --color-light-500: #8D8D8D;
-  --color-light-600: #F9FAFB;
-  --color-light-700: #E2E8F0;
-  --color-light-800: #F8FAFC;
-  
-  --color-dark-100: #16191E;
-  --color-dark-200: #3A354E;
+  --color-green: #027a48;
+  --color-green-100: #ecfdf3;
+  --color-green-400: #4c7b62;
+  --color-green-500: #2cc171;
+  --color-green-800: #027a48;
+
+  --color-red: #ef3a4b;
+  --color-red-400: #f46f70;
+  --color-red-500: #e27233;
+  --color-red-800: #ef3a4b;
+
+  --color-blue-100: #0089f1;
+
+  --color-light-100: #d6e0ff;
+  --color-light-200: #eed1ac;
+  --color-light-300: #f8f8ff;
+  --color-light-400: #edf1f1;
+  --color-light-500: #8d8d8d;
+  --color-light-600: #f9fafb;
+  --color-light-700: #e2e8f0;
+  --color-light-800: #f8fafc;
+
+  --color-dark-100: #16191e;
+  --color-dark-200: #3a354e;
   --color-dark-300: #232839;
-  --color-dark-400: #1E293B;
-  --color-dark-500: #0F172A;
-  --color-dark-600: #333C5C;
-  --color-dark-700: #464F6F;
-  --color-dark-800: #1E2230;
-  
-  --color-gray-100: #CBD5E1;
-  
+  --color-dark-400: #1e293b;
+  --color-dark-500: #0f172a;
+  --color-dark-600: #333c5c;
+  --color-dark-700: #464f6f;
+  --color-dark-800: #1e2230;
+
+  --color-gray-100: #cbd5e1;
+
   /* Configuração de raios para bordas */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -108,11 +112,11 @@
   --card-foreground: 247.9 0.3% 98.4%;
   --popover: 265.7 4.2% 20.8%;
   --popover-foreground: 247.9 0.3% 98.4%;
-  --secondary: 260.0 4.1% 27.9%;
+  --secondary: 260 4.1% 27.9%;
   --secondary-foreground: 247.9 0.3% 98.4%;
-  --muted: 260.0 4.1% 27.9%;
+  --muted: 260 4.1% 27.9%;
   --muted-foreground: 256.8 4% 70.4%;
-  --accent: 260.0 4.1% 27.9%;
+  --accent: 260 4.1% 27.9%;
   --accent-foreground: 247.9 0.3% 98.4%;
   --destructive: 22.2 19.1% 70.4%;
   --border: 0 0% 100% / 10%;
@@ -131,6 +135,10 @@
 
 @layer utilities {
   .bg-pattern {
-    background-image: url('/images/pattern.webp');
+    background-image: url("/images/pattern.webp");
+  }
+
+  .root-container {
+    @apply flex min-h-screen flex-1 flex-col bg-cover bg-top bg-dark-100 px-5 xs:px-10 md:px-16;
   }
 }
