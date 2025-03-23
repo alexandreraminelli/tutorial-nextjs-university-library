@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils"
 import Image from "next/image"
+import BookCoverSvg from "./BookCoverSvg"
 
 /** Variações de estilos da capa. */
 type BookCoverVariant = "extraSmall" | "small" | "medium" | "regular" | "wide"
@@ -36,8 +37,10 @@ export default function BookCover(
         className // classes adicionais
       )}
     >
+      {/* SVG de um desenho de livro */}
+      <BookCoverSvg coverColor={coverColor} />
+      {/* Imagem da capa */}
       <div className="absolute z-10" style={{ left: "12%", width: "87.5%", height: "88%" }}>
-        {/* Imagem da capa */}
         <Image src={coverURL} alt="Book cover" fill className="rounded-sm object-fill" />
       </div>
     </div>
