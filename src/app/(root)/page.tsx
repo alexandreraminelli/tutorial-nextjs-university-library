@@ -1,9 +1,15 @@
-import { Button } from "@/components/ui/button"
+import BookOverview from "@/components/BookOverview"
+import BookList from "@/components/ui/BookList"
 
+/** Homepage da plataforma do usuário. */
 export default function HomePage() {
   return (
     <>
-      <Button>Click me</Button>
+      {/* Hero Section com informações de um livro */}
+      <BookOverview />
+
+      {/* Lista de livros */}
+      <BookList />
     </>
   )
 }
