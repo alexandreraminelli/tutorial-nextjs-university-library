@@ -43,7 +43,7 @@ export default function BookOverview(
         <p className="book-description">{description}</p>
 
         {/* CTA Button */}
-        <Button className="book-overwiew_btn">
+        <Button className="book-overview_btn">
           {/* Ícone de livro */}
           <Image src="/icons/book.svg" alt="book" width={20} height={20}></Image>
           <p className="font-bebas-neue text-xl text-dark-100c">Borrow Book</p>
