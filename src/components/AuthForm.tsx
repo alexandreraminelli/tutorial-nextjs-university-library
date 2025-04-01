@@ -1,11 +1,13 @@
 "use client"
 
+import ImageUpload from "@/components/ImageUpload"
 import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form" // formulário do Shadcn
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"; // formulário do Shadcn
 import { Input } from "@/components/ui/input"
-import { zodResolver } from "@hookform/resolvers/zod" // resolver de validação do Zod
+import { FIELD_NAMES, FIELD_TYPES } from "@/constants"
+import { zodResolver } from "@hookform/resolvers/zod"; // resolver de validação do Zod
 import Link from "next/link"
-import { DefaultValues, FieldValues, SubmitHandler, useForm, UseFormReturn } from "react-hook-form" // biblioteca de formulários do React
+import { DefaultValues, FieldValues, Path, SubmitHandler, useForm, UseFormReturn } from "react-hook-form"; // biblioteca de formulários do React
 import { ZodType } from "zod"
 
 /** Props do formulário de autenticação. */
@@ -47,22 +49,51 @@ export default function AuthForm<T extends FieldValues>(
 
       {/* Formulário */}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormDescription>This is your public display name.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">Submit</Button>
+        <form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          // style:
+          className="space-y-6 w-full"
+        >
+          {/* Gerar os campos de formulários dinamicamente */}
+          {Object.keys(defaultValues).map((field) => (
+            <FormField
+              key={field} // identificador (por ser iteração)
+              control={form.control}
+              name={field as Path<T>}
+              render={({ field }) => (
+                <FormItem>
+                  {/* Label */}
+                  <FormLabel className="capitalize">
+                    {/* Nome do campo: se for o campo de cartão universitário, renderiza o icone de universidade */}
+                    {FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}
+                  </FormLabel>
+
+                  {/* Controle */}
+                  <FormControl>
+                    {/* Se for o campo de cartão universitário, renderiza o componente ImageUpload */}
+                    {field.name == "universityCard" ? (
+                      <ImageUpload />
+                    ) : (
+                      // Senão, renderiza o componente Input
+                      <Input
+                        required
+                        type={FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]} // tipo de input
+                        {...field}
+                        className="form-input"
+                      />
+                    )}
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ))}
+
+          {/* Botão de envio */}
+          <Button type="submit" className="form-btn">
+            {isSignIn ? "Sign in" : "Sign up"}
+          </Button>
         </form>
       </Form>
 
