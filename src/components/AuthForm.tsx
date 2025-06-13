@@ -2,15 +2,18 @@
 
 import ImageUpload from "@/components/ImageUpload"
 import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"; // formulário do Shadcn
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form" // formulário do Shadcn
 import { Input } from "@/components/ui/input"
 import { FIELD_NAMES, FIELD_TYPES } from "@/constants"
-import { zodResolver } from "@hookform/resolvers/zod"; // resolver de validação do Zod
+import { zodResolver } from "@hookform/resolvers/zod" // resolver de validação do Zod
 import Link from "next/link"
-import { DefaultValues, FieldValues, Path, SubmitHandler, useForm, UseFormReturn } from "react-hook-form"; // biblioteca de formulários do React
+import { DefaultValues, FieldValues, Path, SubmitHandler, useForm, UseFormReturn } from "react-hook-form" // biblioteca de formulários do React
 import { ZodType } from "zod"
 
-/** Props do formulário de autenticação. */
+/** Props do formulário de autenticação.
+ *
+ * `T`: Tipo genérico que estende `FieldValues`, permitindo que o formulário seja tipado dinamicamente.
+ */
 interface Props<T extends FieldValues> {
   /** Schema de validação do formulário. */
   schema: ZodType<T>
