@@ -1,6 +1,7 @@
 import type { Metadata } from "next" // metadados
 import localFont from "next/font/local" // fontes
 import "./globals.css" // Tailwind CSS
+import { Toaster } from "sonner"
 
 // Fontes
 /** Fonte IBM Plex Sans (local). */
@@ -35,7 +36,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}>{children}</body>
+      <body className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}>
+        {children} {/* Filho */}
+        <Toaster /> {/* Notificações */}
+      </body>
     </html>
   )
 }
