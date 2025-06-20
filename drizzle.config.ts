@@ -4,6 +4,7 @@
  *
  * Comandos no Terminal:
  * - Gerar migrações: `npx drizzle-kit generate`
+ * - Executar migrações: `npx drizzle-kit migrate`
  */
 
 import { config } from "dotenv"
