@@ -1,6 +1,9 @@
 /*
  * Configuração do Drizzle ORM.
  * Define as opções de migração e conexão com o banco de dados.
+ *
+ * Comandos no Terminal:
+ * - Gerar migrações: `npx drizzle-kit generate`
  */
 
 import { config } from "dotenv"
