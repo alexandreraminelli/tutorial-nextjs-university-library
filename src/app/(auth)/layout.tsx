@@ -1,7 +1,13 @@
+import { auth } from "@/auth"
 import Image from "next/image"
+import { redirect } from "next/navigation"
 
 /** Layout das rotas de autenticação. */
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default async function AuthLayout({ children }: { children: React.ReactNode }) {
+  // Redirecionar usuários autenticados para a página inicial
+  const session = await auth()
+  if (session) redirect("/")
+
   return (
     <main className="auth-container">
       <section className="auth-form">
