@@ -46,4 +46,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  // Endpoint das páginas de autenticação
+  pages: {
+    signIn: "/sign-in", // login
+  },
+  // Callbacks (funções de retorno)
+  callbacks: {
+    // Retornar token do JWT
+    async jwt({ token, user }) {
+      // Se usuário foi autenticado, adiciona suas informações ao token
+      if (user) {
+        token.id = user.id
+        token.name = user.name
+      }
+      return token
+    },
+    // Retornar sessão do usuário
+    async session({ session, token }) {
+      // Se o token contém informações do usuário, adiciona ao objeto de sessão
+      if (session.user) {
+        session.user.id = token.id as string
+        session.user.name = token.name as string
+      }
+      return session
+    },
+  },
 })
