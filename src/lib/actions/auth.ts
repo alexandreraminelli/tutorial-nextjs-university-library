@@ -1,15 +1,44 @@
 "use server"
 
+import { signIn } from "@/auth"
 import { db } from "@/database/drizzle"
 import { users } from "@/database/schema"
 import { hash } from "bcryptjs"
 import { eq } from "drizzle-orm"
 
 /**
+ * Função para realizar o login de um usuário com email e senha.
+ *
+ * @param params Objeto contendo as credenciais do usuário (email e senha).
+ */
+export async function signInWithCredentials(params: Pick<AuthCredentials, "email" | "password">) {
+  // Desestruturar os parâmetros
+  const { email, password } = params
+
+  try {
+    // Tentar iniciar sessão com as credenciais fornecidas
+    // Armazena o resultado da tentativa de login (error ou success)
+    const result = await signIn("credentials", { email, password, redirect: false })
+
+    if (result?.error) {
+      // Se houve erro, retornar objeto com sucesso falso e mensagem de erro
+      return { success: false, error: result.error }
+    }
+    return { success: true }
+  } catch (error) {
+    // Exibir e retornar erro
+    console.error(error, "Signin error")
+    return { success: false, error: "Signin error" }
+  }
+}
+
+/**
  * Função para realizar o cadastro de um novo usuário.
  * @param params Objeto `AuthCredentials` contendo as informações do usuário fornecidas no formulário de cadastro.
+ * @returns Um objeto indicando o sucesso da operação e, em caso de falha, uma mensagem de erro.
+ * @throws Erro ao inserir o usuário no banco de dados ou ao iniciar a sessão.
  */
-async function signUp(params: AuthCredentials) {
+export async function signUp(params: AuthCredentials) {
   // Desestruturar os parâmetros
   const { fullName, email, universityId, password, universityCard } = params
 
