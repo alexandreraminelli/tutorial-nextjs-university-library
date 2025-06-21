@@ -3,8 +3,11 @@
 import { signIn } from "@/auth"
 import { db } from "@/database/drizzle"
 import { users } from "@/database/schema"
+import ratelimit from "@/lib/ratelimit"
 import { hash } from "bcryptjs"
 import { eq } from "drizzle-orm"
+import { headers } from "next/headers"
+import { redirect } from "next/navigation"
 
 /**
  * Função para realizar o login de um usuário com email e senha.
@@ -14,6 +17,11 @@ import { eq } from "drizzle-orm"
 export async function signInWithCredentials(params: Pick<AuthCredentials, "email" | "password">) {
   // Desestruturar os parâmetros
   const { email, password } = params
+
+  /** Endereço IP do usuário. */
+  const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1"
+  const { success } = await ratelimit.limit(ip) // Limitar requisições por IP
+  if (!success) return redirect("/too-fast") // Redirecionar se limite de requisições for atingido
 
   try {
     // Tentar iniciar sessão com as credenciais fornecidas
@@ -41,6 +49,11 @@ export async function signInWithCredentials(params: Pick<AuthCredentials, "email
 export async function signUp(params: AuthCredentials) {
   // Desestruturar os parâmetros
   const { fullName, email, universityId, password, universityCard } = params
+
+  /** Endereço IP do usuário. */
+  const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1"
+  const { success } = await ratelimit.limit(ip) // Limitar requisições por IP
+  if (!success) return redirect("/too-fast") // Redirecionar se limite de requisições for atingido
 
   // Verificar se usuário já existe
   const existingUser = await db.select().from(users).where(eq(users.email, email)).limit(1)
