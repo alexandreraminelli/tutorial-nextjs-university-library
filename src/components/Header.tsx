@@ -1,12 +1,14 @@
 "use client"
 
-import { cn } from "@/lib/utils"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { cn, getInitials } from "@/lib/utils"
+import { Session } from "next-auth"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 /** Cabeçalho da aplicação. */
-export default function Header() {
+export default function Header({ session }: { session: Session }) {
   /** Caminho da URL atual. */
   const pathname = usePathname()
 
@@ -19,8 +21,9 @@ export default function Header() {
 
       {/* Navbar */}
       <ul className="flex flex-row items-center gap-8">
+        {/* Links do navbar */}
         <li>
-          {/* Link do navbar */}
+          {/* Link: biblioteca */}
           <Link
             href="/library"
             className={cn(
@@ -31,6 +34,15 @@ export default function Header() {
             )}
           >
             Library
+          </Link>
+        </li>
+        <li>
+          {/* Ícone da Conta */}
+          <Link href="/my-profile">
+            <Avatar>
+              {/* Iniciais do usuário */}
+              <AvatarFallback className="bg-amber-100 text-black">{getInitials(session?.user?.name || "")}</AvatarFallback>
+            </Avatar>
           </Link>
         </li>
       </ul>
