@@ -9,7 +9,7 @@ import { redirect } from "next/navigation"
 export default async function Layout({ children }: { children: React.ReactNode }) {
   // Redirecionar usuários não autenticados para a tela de autenticação
   const session = await auth()
-  if (!session) redirect("/")
+  if (!session) redirect("/sign-in")
 
   return (
     <main className="root-container bg-pattern">
