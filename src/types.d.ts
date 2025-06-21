@@ -31,3 +31,17 @@ interface Book {
   /** Se o livro está emprestado. */
   isLoanedBook?: boolean
 }
+
+/** Tipagem das credenciais de autenticação. */
+interface AuthCredentials {
+  /** Nome do usuário. */
+  fullName: string
+  /** Senha do usuário. */
+  email: string
+  /** Senha do usuário. */
+  password: string
+  /** ID universitário do usuário. */
+  universityId: number
+  /** Imagem do cartão universitário do usuário. */
+  universityCard: string
+}
