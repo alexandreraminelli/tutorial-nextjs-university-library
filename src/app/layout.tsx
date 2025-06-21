@@ -2,6 +2,8 @@ import type { Metadata } from "next" // metadados
 import localFont from "next/font/local" // fontes
 import "./globals.css" // Tailwind CSS
 import { Toaster } from "sonner"
+import { SessionProvider } from "next-auth/react"
+import { auth } from "@/auth"
 
 // Fontes
 /** Fonte IBM Plex Sans (local). */
@@ -29,17 +31,22 @@ export const metadata: Metadata = {
 }
 
 /** Layout principal da aplicação. */
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const session = await auth() // Obtém a sessão do NextAuth
+
   return (
     <html lang="en">
-      <body className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}>
-        {children} {/* Filho */}
-        <Toaster /> {/* Notificações */}
-      </body>
+      {/* Provedor de sessão do NextAuth */}
+      <SessionProvider session={session}>
+        <body className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}>
+          {children} {/* Filho */}
+          <Toaster richColors /> {/* Notificações */}
+        </body>
+      </SessionProvider>
     </html>
   )
 }
