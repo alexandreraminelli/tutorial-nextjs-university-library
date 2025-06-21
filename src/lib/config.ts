@@ -21,6 +21,11 @@ const config = {
       /** Chave privada da API do ImageKit. */
       privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
     },
+    /** Variáveis de ambiente para conexão com o Upstash (Redis). */
+    upstash: {
+      redisUrl: process.env.UPSTASH_REDIS_REST_URL!,
+      redisToken: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    },
   },
 }
 
