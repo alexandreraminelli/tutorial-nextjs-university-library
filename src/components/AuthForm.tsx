@@ -7,7 +7,9 @@ import { Input } from "@/components/ui/input"
 import { FIELD_NAMES, FIELD_TYPES } from "@/constants"
 import { zodResolver } from "@hookform/resolvers/zod" // resolver de validação do Zod
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { DefaultValues, FieldValues, Path, SubmitHandler, useForm, UseFormReturn } from "react-hook-form" // biblioteca de formulários do React
+import { toast } from "sonner" // notificações (shadcn)
 import { ZodType } from "zod"
 
 /** Props do formulário de autenticação.
@@ -29,6 +31,9 @@ interface Props<T extends FieldValues> {
 export default function AuthForm<T extends FieldValues>(
   { type, schema, defaultValues, onSubmit }: Props<T> // props
 ) {
+  /** Hook Next.js para manipulação de rotas. */
+  const router = useRouter()
+
   /** Verifica se o formulário é de login. */
   const isSignIn = type == "SIGN_IN"
 
@@ -39,7 +44,22 @@ export default function AuthForm<T extends FieldValues>(
   })
   /** Função para lidar com o envio do formulário. */
   const handleSubmit: SubmitHandler<T> = async (data) => {
-    console.log(data)
+    // Envia os dados do formulário
+    const result = await onSubmit(data)
+    // Verificar se a operação foi bem-sucedida
+    if (result.success) {
+      // Notificação de sucesso
+      toast.success("Success", {
+        description: isSignIn ? "You have successfully signed in" : "You have successfully signed up",
+      })
+      // Redirecionar para a página inicial
+      router.push("/")
+    } else {
+      // Notificação de erro
+      toast.error(`Error ${isSignIn ? "signing in" : "signing up"}`, {
+        description: result.error || "An error occurred, please try again",
+      })
+    }
   }
 
   // Renderizar o formulário
