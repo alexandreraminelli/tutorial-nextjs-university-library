@@ -1,4 +1,7 @@
+import { db } from "@/database/drizzle"
+import { users } from "@/database/schema"
 import { serve } from "@upstash/workflow/nextjs"
+import { eq } from "drizzle-orm"
 
 /* Tipagem */
 /** Status do usuário. */
@@ -14,6 +17,32 @@ const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000
 const THREE_DAYS_IN_MS = 3 * ONE_DAY_IN_MS
 const THIRTY_DAYS_IN_MS = 30 * ONE_DAY_IN_MS
 
+/**
+ * Função para obter o estado do usuário.
+ * @param email O e-mail do usuário para verificar o estado.
+ * @returns O estado do usuário, que pode ser `"non-active"` ou `"active"`.
+ */
+async function getUserState(email: string): Promise<UserState> {
+  // Obter usuário do banco de dados pelo e-mail
+  const user = await db.select().from(users).where(eq(users.email, email)).limit(1)
+
+  // Se usuário não existir, retornar "non-active"
+  if (user.length === 0) return "non-active"
+
+  /** Data da última atividade do usuário. */
+  const lastActivityDate = new Date(user[0].lastActivityDate!)
+  /** Data atual. */
+  const now = new Date()
+  /** Quantos dias foi a última atividade do usuário. (em ms) */
+  const timeDifference = now.getTime() - lastActivityDate.getTime()
+
+  // Se a última atividade foi entre 3 e 30 dias, considerar o usuário como "non-active"
+  if (timeDifference > THREE_DAYS_IN_MS && timeDifference <= THIRTY_DAYS_IN_MS) return "non-active"
+  // Última atividade a menos de 3 dias
+  else return "active"
+}
+
+// Workflow de Onboarding
 export const { POST } = serve<InitialData>(async (context) => {
   const { email } = context.requestPayload
 
@@ -34,7 +63,7 @@ export const { POST } = serve<InitialData>(async (context) => {
   while (true) {
     /** Estado do usuário (ativo ou inativo). */
     const state = await context.run("check-user-state", async () => {
-      return await getUserState()
+      return await getUserState(email)
     })
 
     if (state === "non-active") {
@@ -59,9 +88,4 @@ export const { POST } = serve<InitialData>(async (context) => {
 async function sendEmail(message: string, email: string) {
   // Implement email sending logic here
   console.log(`Sending ${message} email to ${email}`)
-}
-
-const getUserState = async (): Promise<UserState> => {
-  // Implement user state logic here
-  return "non-active"
 }
