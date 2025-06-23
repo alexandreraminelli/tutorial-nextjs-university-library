@@ -1,8 +1,18 @@
 import { serve } from "@upstash/workflow/nextjs"
 
+/* Tipagem */
+/** Status do usuário. */
+type UserState = "non-active" | "active"
+/**  */
 type InitialData = {
   email: string
+  fullName: string
 }
+
+/* Constantes */
+const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000
+const THREE_DAYS_IN_MS = 3 * ONE_DAY_IN_MS
+const THIRTY_DAYS_IN_MS = 30 * ONE_DAY_IN_MS
 
 export const { POST } = serve<InitialData>(async (context) => {
   const { email } = context.requestPayload
@@ -50,8 +60,6 @@ async function sendEmail(message: string, email: string) {
   // Implement email sending logic here
   console.log(`Sending ${message} email to ${email}`)
 }
-
-type UserState = "non-active" | "active"
 
 const getUserState = async (): Promise<UserState> => {
   // Implement user state logic here
