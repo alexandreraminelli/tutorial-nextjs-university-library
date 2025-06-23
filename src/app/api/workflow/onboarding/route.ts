@@ -1,5 +1,6 @@
 import { db } from "@/database/drizzle"
 import { users } from "@/database/schema"
+import { sendEmail } from "@/lib/workflow"
 import { serve } from "@upstash/workflow/nextjs"
 import { eq } from "drizzle-orm"
 
@@ -44,13 +45,17 @@ async function getUserState(email: string): Promise<UserState> {
 
 // Workflow de Onboarding
 export const { POST } = serve<InitialData>(async (context) => {
-  const { email } = context.requestPayload
+  // Desestruturação dos dados do contexto
+  const { email, fullName } = context.requestPayload
 
-  /*
-   * Enviar e-mail de boas-vindas para o usuário recém-inscrito.
-   */
+  /* Enviar e-mail de boas-vindas para o usuário recém-inscrito. */
   await context.run("new-signup", async () => {
-    await sendEmail("Welcome to the platform", email)
+    await sendEmail({
+      // e-mail, assunto e mensagem
+      email,
+      subject: "Welcome to the platform!",
+      message: `Welcome ${fullName}!`,
+    })
   })
 
   /*
@@ -69,12 +74,20 @@ export const { POST } = serve<InitialData>(async (context) => {
     if (state === "non-active") {
       // Se usuário não estiver ativo, enviar e-mail de lembrete.
       await context.run("send-email-non-active", async () => {
-        await sendEmail("Email to non-active users", email)
+        await sendEmail({
+          email,
+          subject: "Are you still there?",
+          message: `Hey ${fullName}, we miss you!`,
+        })
       })
     } else if (state === "active") {
       // Se usuário estiver ativo, enviar e-mail de newsletter.
       await context.run("send-email-active", async () => {
-        await sendEmail("Send newsletter to active users", email)
+        await sendEmail({
+          email,
+          subject: "Welcome back!",
+          message: `Welcome back ${fullName}!`,
+        })
       })
     }
 
@@ -84,8 +97,3 @@ export const { POST } = serve<InitialData>(async (context) => {
     await context.sleep("wait-for-1-month", 60 * 60 * 24 * 30)
   }
 })
-
-async function sendEmail(message: string, email: string) {
-  // Implement email sending logic here
-  console.log(`Sending ${message} email to ${email}`)
-}
