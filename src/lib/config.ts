@@ -23,8 +23,12 @@ const config = {
     },
     /** Variáveis de ambiente para conexão com o Upstash (Redis). */
     upstash: {
+      // Redis
       redisUrl: process.env.UPSTASH_REDIS_REST_URL!,
       redisToken: process.env.UPSTASH_REDIS_REST_TOKEN!,
+      // QStash (mensagens e agendamentos)
+      qstashUrl: process.env.QSTASH_URL!,
+      qstashToken: process.env.QSTASH_TOKEN!,
     },
   },
 }
