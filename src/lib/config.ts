@@ -32,6 +32,8 @@ const config = {
       qstashUrl: process.env.QSTASH_URL!,
       qstashToken: process.env.QSTASH_TOKEN!,
     },
+    /** Variáveis de ambiente para conexão com o Resend (e-mails). */
+    resendToken: process.env.RESENT_TOKEN!,
   },
 }
 
