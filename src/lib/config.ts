@@ -7,6 +7,8 @@ const config = {
   env: {
     /** Endpoint da API do Next.js criada nesse repositório. */
     apiEndpoint: process.env.NEXT_PUBLIC_API_ENDPOINT!,
+    /** URL de produção. */
+    prodApiEndpoint: process.env.NEXT_PUBLIC_PROD_API_ENDPOINT!,
     /** Variáveis de ambiente para o banco de dados. */
     database: {
       /** URL de conexão com o banco de dados */
