@@ -76,7 +76,7 @@ export async function signUp(params: AuthCredentials) {
     })
     // Disparar workflow para registrar atividade do usuário e enviar e-mail de boas-vindas
     await workflowClient.trigger({
-      url: `${config.env.prodApiEndpoint}/api/workflow/onboarding`,
+      url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
       body: { email, fullName },
     })
     // Iniciar sessão com novo usuário criado
