@@ -376,6 +376,20 @@
   }
 
   .form-input {
-    @apply w-full min-h-14 border-none text-base font-bold placeholder:font-normal text-white placeholder:text-light-100 focus-visible:ring-0 focus-visible:shadow-none bg-dark-300;
+    @apply w-full min-h-14 text-base font-bold placeholder:font-normal text-white placeholder:text-light-100 focus-visible:ring-0 focus-visible:shadow-none bg-gray-800 border border-primary focus:border-primary;
   }
+}
+
+/* Garante que o background e a cor do texto dos inputs nunca mudam, mesmo com autofill ou ao digitar */
+input.bg-dark-300:-webkit-autofill,
+input.bg-dark-300:-webkit-autofill:focus,
+input.bg-dark-300:-webkit-autofill:hover,
+input.bg-dark-300:-webkit-autofill:active,
+input.bg-dark-300:not(:placeholder-shown),
+input.bg-dark-300:focus,
+input.bg-dark-300 {
+  background-color: #232839 !important;
+  -webkit-box-shadow: 0 0 0 1000px #232839 inset !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
 }
