@@ -101,7 +101,7 @@ export default function ImageUpload(
       </button>
 
       {/* Exibir imagem carregada (se houver) */}
-      {file && <IKImage alt={file.filePath} path={file.filePath} width={500} height={190} />}
+      {file && <IKImage alt={file.filePath} path={file.filePath} width={500} height={275} />}
     </ImageKitProvider>
   )
 }
