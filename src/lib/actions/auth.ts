@@ -3,7 +3,9 @@
 import { signIn } from "@/auth"
 import { db } from "@/database/drizzle"
 import { users } from "@/database/schema"
+import config from "@/lib/config"
 import ratelimit from "@/lib/ratelimit"
+import { workflowClient } from "@/lib/workflow"
 import { hash } from "bcryptjs"
 import { eq } from "drizzle-orm"
 import { headers } from "next/headers"
@@ -71,6 +73,11 @@ export async function signUp(params: AuthCredentials) {
       universityId,
       password: hashedPassword,
       universityCard,
+    })
+    // Disparar workflow para registrar atividade do usuário e enviar e-mail de boas-vindas
+    await workflowClient.trigger({
+      url: `${config.env.prodApiEndpoint}/api/workflow/onboarding`,
+      body: { email, fullName },
     })
     // Iniciar sessão com novo usuário criado
     await signInWithCredentials({ email, password })
