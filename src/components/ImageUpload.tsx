@@ -81,7 +81,7 @@ export default function ImageUpload(
 
       {/* Botão de Upload */}
       <button
-        className="upload-btn"
+        className="upload-btn cursor-pointer"
         // chamar componente de upload
         onClick={(e) => {
           e.preventDefault()
