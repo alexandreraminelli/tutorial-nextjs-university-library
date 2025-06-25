@@ -1,4 +1,5 @@
 import { auth } from "@/auth"
+import "@/styles/admin.css"
 import { redirect } from "next/navigation"
 import { ReactNode } from "react"
 
@@ -18,7 +19,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
       <p>Sidebar</p>
 
       {/* Container do admin */}
-      <div className="admin-container">
+      <div className="admin-container flex w-[calc(100%-264px)] flex-1 flex-col bg-light-300 p-5 xs:p-10">
         {/* Cabeçalho */}
         <p>Header</p>
 
