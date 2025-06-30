@@ -38,7 +38,7 @@ async function authenticator() {
 }
 
 /** Input para upload de arquivo de imagem. */
-export default function ImageUpload(
+export default function FileUpload(
   // Props
   { onFileChange }: { onFileChange: (filePath: string) => void }
 ) {

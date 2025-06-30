@@ -1,6 +1,6 @@
 "use client"
 
-import ImageUpload from "@/components/ImageUpload"
+import FileUpload from "@/components/FileUpload"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form" // formulário do Shadcn
 import { Input } from "@/components/ui/input"
@@ -96,7 +96,7 @@ export default function AuthForm<T extends FieldValues>(
                     {/* Se for o campo de cartão universitário, renderiza o componente ImageUpload */}
                     {field.name == "universityCard" ? (
                       // Input para upload de imagem (ID universitário)
-                      <ImageUpload onFileChange={field.onChange} />
+                      <FileUpload onFileChange={field.onChange} />
                     ) : (
                       // Senão, renderiza o componente Input
                       <Input
