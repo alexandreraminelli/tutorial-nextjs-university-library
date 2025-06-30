@@ -96,7 +96,7 @@ export default function AuthForm<T extends FieldValues>(
                     {/* Se for o campo de cartão universitário, renderiza o componente ImageUpload */}
                     {field.name == "universityCard" ? (
                       // Input para upload de imagem (ID universitário)
-                      <FileUpload onFileChange={field.onChange} />
+                      <FileUpload variant="dark" onFileChange={field.onChange} />
                     ) : (
                       // Senão, renderiza o componente Input
                       <Input

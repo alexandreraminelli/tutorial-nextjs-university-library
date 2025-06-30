@@ -1,6 +1,7 @@
 "use client"
 
 import config from "@/lib/config"
+import { cn } from "@/lib/utils"
 import { IKImage, IKUpload, ImageKitProvider } from "imagekitio-next"
 import Image from "next/image"
 import { useRef, useState } from "react"
@@ -41,9 +42,9 @@ async function authenticator() {
 interface Props {
   /** Tipo de arquivo do upload. */
   type: "image" | "video"
-  /**  */
+  /** Tipos de arquivos aceitos no upload. */
   accept: string
-  /**  */
+  /** Placeholder do input de upload. */
   placeholder: string
   /** Pasta onde o arquivo será colocado. */
   folder: string
@@ -118,13 +119,23 @@ export default function FileUpload(
         ref={iKUploadRef} // renderização de outro componente
         onError={onError} // função de erro
         onSuccess={onSuccess} // função de sucesso
-        fileName={"test-upload.png"} // nome do arquivo
+        useUniqueFileName={true} // usar nome de arquivo único
+        validateFile={onValidate} // função de validação de arquivo
+        onUploadStart={() => setProgress(0)} // função chamada quando o upload começa: progresso = 0
+        onUploadProgress={({ loaded, total }) => {
+          // função chamada quando o upload está em progresso
+          /** Porcentagem do upload */
+          const percent = Math.round((loaded / total) * 100)
+          setProgress(percent) // Atualiza o progresso do upload
+        }}
+        folder={folder} // pasta onde o arquivo será colocado
+        accept={accept} // tipo de arquivo aceito
         className="hidden" // style
       />
 
       {/* Botão de Upload */}
       <button
-        className="upload-btn cursor-pointer"
+        className={cn("upload-btn flex min-h-14 w-full items-center justify-center gap-1.5 rounded-md cursor-pointer", styles.button)}
         // chamar componente de upload
         onClick={(e) => {
           e.preventDefault()
@@ -136,11 +147,11 @@ export default function FileUpload(
       >
         {/* Ícone de Upload */}
         <Image src="/icons/upload.svg" alt="upload-icon" width={20} height={20} className="object-contain" />
-        {/* Texto */}
-        <p className="text-base text-light-100">Upload a File</p>
+        {/* Placeholder do botão de upload */}
+        <p className={cn("text-base", styles.placeholder)}>{placeholder}</p>
 
         {/* Nome do arquivo carregado (se houver) */}
-        {file && <p className="upload-filename">{file.filePath}</p>}
+        {file && <p className={cn("upload-filename mt-1 text-center text-xs", styles.text)}>{file.filePath}</p>}
       </button>
 
       {/* Exibir imagem carregada (se houver) */}
