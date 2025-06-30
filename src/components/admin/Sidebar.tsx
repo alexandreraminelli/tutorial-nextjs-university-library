@@ -1,16 +1,18 @@
 "use client"
 
-import Image from "next/image"
 import { adminSideBarLinks } from "@/constants"
+import { cn, getInitials } from "@/lib/utils"
+import { Avatar, AvatarFallback } from "@radix-ui/react-avatar"
+import { Session } from "next-auth"
+import Image from "next/image"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
 
 /**
  * Componente Sidebar da área do administrador.
  * Agrupa os links das opções de administração.
  */
-export default function AdminSidebar() {
+export default function AdminSidebar({ session }: { session: Session }) {
   const pathname = usePathname() // obter URL atual
 
   return (
@@ -51,6 +53,21 @@ export default function AdminSidebar() {
               </Link>
             )
           })}
+        </div>
+      </div>
+
+      {/* Informações do usuário logado */}
+      <div className="user my-8 flex w-full flex-row gap-2 rounded-full border border-light-400 px-6 py-2 shadow-sm max-md:px-2">
+        {/* Iniciais do usuário */}
+        <Avatar>
+          <AvatarFallback className="bg-amber-100 text-black flex items-center justify-center rounded-full w-10 h-10">{getInitials(session?.user?.name || "")}</AvatarFallback>
+        </Avatar>
+        {/*  */}
+        <div className="flex flex-col max-md:hidden">
+          {/* Nome do usuário */}
+          <p className="font-semibold text-dark-200">{session?.user?.name}</p>
+          {/* E-mail do usuário */}
+          <p className="text-light-500 text-xs">{session?.user?.email}</p>
         </div>
       </div>
     </div>
