@@ -48,7 +48,9 @@ export default function BookForm(
   })
 
   /** Função para enviar o formulário. */
-  const onSubmit = async (values: z.infer<typeof bookSchema>) => {}
+  const onSubmit = async (values: z.infer<typeof bookSchema>) => {
+    console.log(values) // debug
+  }
 
   // Renderizar o formulário
   return (
