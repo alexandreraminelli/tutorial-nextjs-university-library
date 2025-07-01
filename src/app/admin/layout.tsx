@@ -1,7 +1,10 @@
 import { auth } from "@/auth"
 import Header from "@/components/admin/Header"
 import AdminSidebar from "@/components/admin/Sidebar"
+import { db } from "@/database/drizzle"
+import { users } from "@/database/schema"
 import "@/styles/admin.css"
+import { eq } from "drizzle-orm"
 import { redirect } from "next/navigation"
 import { ReactNode } from "react"
 
@@ -14,6 +17,17 @@ export default async function AdminLayout({ children }: { children: ReactNode })
 
   // Se não houver sessão ativa
   if (!session?.user?.id) redirect("/sign-in")
+  // Verificar se o usuário é um administrador
+  const isAdmin = await db
+    .select({ isAdmin: users.role })
+    .from(users)
+    .where(eq(users.id, session.user.id))
+    .limit(1)
+    .then((res) => res[0]?.isAdmin === "ADMIN")
+
+  // Se não for administrador, redirecionar para a página inicial
+  if (!isAdmin) redirect("/")
+
   // TSX
   return (
     <main className="flex min-h-screen w-full flex-row">
