@@ -2,7 +2,7 @@
 
 import config from "@/lib/config"
 import { cn } from "@/lib/utils"
-import { IKImage, IKUpload, ImageKitProvider } from "imagekitio-next"
+import { IKImage, IKUpload, IKVideo, ImageKitProvider } from "imagekitio-next"
 import Image from "next/image"
 import { useRef, useState } from "react"
 import { toast } from "sonner"
@@ -151,11 +151,27 @@ export default function FileUpload(
         <p className={cn("text-base", styles.placeholder)}>{placeholder}</p>
 
         {/* Nome do arquivo carregado (se houver) */}
-        {file && <p className={cn("upload-filename mt-1 text-center text-xs", styles.text)}>{file.filePath}</p>}
+        {/* {file && <p className={cn("upload-filename mt-1 text-center text-xs", styles.text)}>{file.filePath}</p>} */}
       </button>
 
+      {/* Barra de progresso do upload */}
+      {progress > 0 && progress !== 100 && (
+        <div className="w-full rounded-full bg-green-200">
+          <div className="progress rounded-full bg-green-800 p-0.5 text-center font-bebas-neue text-[8px] font-bold leading-none text-light-100" style={{ width: `${progress}%` }}>
+            {progress}%
+          </div>
+        </div>
+      )}
+
       {/* Exibir imagem carregada (se houver) */}
-      {file && <IKImage alt={file.filePath} path={file.filePath} width={500} height={275} />}
+      {file && type === "image" ? ( // se arquivo for uma imagem
+        <IKImage alt={file.filePath} path={file.filePath} width={500} height={275} />
+      ) : (
+        type === "video" && (
+          // se arquivo for um vídeo
+          <IKVideo path={file?.filePath} controls={true} className="h-96 w-full rounded-xl" />
+        )
+      )}
     </ImageKitProvider>
   )
 }
