@@ -45,7 +45,7 @@ export const bookSchema = z.object({
   /** Avaliação do livro.
    * Número entre 1 e 5.
    */
-  rating: z.number().min(1).max(5),
+  rating: z.coerce.number().min(1).max(5),
   /** Quantidades total de cópias do livro.
    * Número inteiro positivo até 10.000.
    */
