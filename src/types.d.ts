@@ -15,19 +15,21 @@ interface Book {
   /** Avaliação do livro. */
   rating: number
   /** Total de cópias do livro. */
-  total_copies: number
+  totalCopies: number
   /** Cópias disponíveis do livro. */
-  available_copies: number
+  availableCopies: number
   /** Descrição do livro. */
   description: string
   /** Cor do livro. */
-  color: string
+  coverColor: string
   /** Capa do livro (URL). */
-  cover: string
+  coverUrl: string
   /** Vídeo do livro (URL). */
-  video: string
+  videoUrl: string
   /** Resumo do livro. */
   summary: string
+  /** Data de criação do livro. */
+  createdAt: Date | null
   /** Se o livro está emprestado. */
   isLoanedBook?: boolean
 }
