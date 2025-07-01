@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod" // resolver de validação
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form" // biblioteca de formulários do React
 import z from "zod"
+import ColorPicker from "./ColorPicker"
 
 /**
  * Props do formulário de livros.
@@ -199,7 +200,9 @@ export default function BookForm(
               <FormLabel className="text-base font-normal text-dark-500">Primary Color</FormLabel>
 
               {/* Controlador */}
-              <FormControl>{/* Color Picker */}</FormControl>
+              <FormControl>
+                <ColorPicker onPickerChange={field.onChange} value={field.value} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
