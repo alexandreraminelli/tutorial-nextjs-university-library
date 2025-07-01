@@ -164,14 +164,14 @@ export default function FileUpload(
       )}
 
       {/* Exibir imagem carregada (se houver) */}
-      {file && type === "image" ? ( // se arquivo for uma imagem
-        <IKImage alt={file.filePath} path={file.filePath} width={500} height={275} />
-      ) : (
-        type === "video" && (
-          // se arquivo for um vídeo
-          <IKVideo path={file?.filePath} controls={true} className="h-96 w-full rounded-xl" />
-        )
-      )}
+      {file &&
+        (type === "image" ? ( // se arquivo for uma imagem
+          <IKImage alt={file.filePath} path={file.filePath} width={500} height={275} />
+        ) : (
+          type === "video" && ( // se arquivo for um vídeo
+            <IKVideo path={file?.filePath} controls={true} className="h-96 w-full rounded-xl" />
+          )
+        ))}
     </ImageKitProvider>
   )
 }
