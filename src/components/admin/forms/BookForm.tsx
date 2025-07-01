@@ -12,6 +12,8 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form" // biblioteca de formulários do React
 import z from "zod"
 import ColorPicker from "./ColorPicker"
+import { createBook } from "@/lib/admin/actions/book"
+import { toast } from "sonner"
 
 /**
  * Props do formulário de livros.
@@ -49,7 +51,19 @@ export default function BookForm(
 
   /** Função para enviar o formulário. */
   const onSubmit = async (values: z.infer<typeof bookSchema>) => {
-    console.log(values) // debug
+    const result = await createBook(values)
+
+    if (result.success) {
+      /* Livro criado com sucesso */
+      // Notificação de sucesso
+      toast.success("Success", { description: "Book created successfully!" })
+      // Redirecionar para a página do livro criado
+      router.push(`/admin/books/${result.data.id}`)
+    } else {
+      /* Erro ao criar livro */
+      // Notificação de erro
+      toast.error("Error", { description: result.message || "An error occurred while creating the book." })
+    }
   }
 
   // Renderizar o formulário
