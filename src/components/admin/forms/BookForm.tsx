@@ -1,5 +1,6 @@
 "use client"
 
+import FileUpload from "@/components/FileUpload"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form" // formulário do Shadcn
 import { Input } from "@/components/ui/input"
@@ -181,7 +182,9 @@ export default function BookForm(
               <FormLabel className="text-base font-normal text-dark-500">Book Image</FormLabel>
 
               {/* Controlador */}
-              <FormControl>{/* File Upload */}</FormControl>
+              <FormControl>
+                <FileUpload type="image" accept="image/*" variant="light" placeholder="Upload a book cover" folder="books/covers" onFileChange={field.onChange} value={field.value} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -227,9 +230,7 @@ export default function BookForm(
               {/* Label */}
               <FormLabel className="text-base font-normal text-dark-500">Book Trailer</FormLabel>
               {/* Controlador */}
-              <FormControl>
-                <Textarea placeholder="Book description" {...field} rows={10} className="book-form_input min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500" />
-              </FormControl>
+              <FileUpload type="video" accept="video/*" variant="light" placeholder="Upload a book trailer" folder="books/videos" onFileChange={field.onChange} value={field.value} />
               <FormMessage />
             </FormItem>
           )}

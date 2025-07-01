@@ -52,6 +52,8 @@ interface Props {
   variant: "dark" | "light"
   /** Função de callback chamada quando um novo arquivo for enviado com sucesso pelo usuário.  */
   onFileChange: (filePath: string) => void
+  /** Valor do campo. */
+  value?: string
 }
 
 /** Input para upload de arquivo de imagem. */
