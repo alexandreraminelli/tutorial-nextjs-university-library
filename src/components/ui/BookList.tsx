@@ -14,6 +14,9 @@ interface Props {
 export default function BookList(
   { title, books, containerClassName }: Props // props
 ) {
+  // Verificar se há elementos para mostrar
+  if (books.length < 2) return
+  // Há mais de 2 livros
   return (
     <section className={containerClassName}>
       {/* Título da lista */}
