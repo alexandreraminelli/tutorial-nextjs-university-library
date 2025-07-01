@@ -59,12 +59,14 @@ interface Props {
 /** Input para upload de arquivo de imagem. */
 export default function FileUpload(
   // Props
-  { type, accept, placeholder, folder, variant, onFileChange }: Props
+  { type, accept, placeholder, folder, variant, onFileChange, value }: Props
 ) {
   /** Referência para o componente `IKUpload`. */
   const iKUploadRef = useRef(null)
   // Estado para armazenar o arquivo carregado.
-  const [file, setFile] = useState<{ filePath: string } | null>(null)
+  const [file, setFile] = useState<{ filePath: string | null }>({
+    filePath: value ?? null, // Valor inicial do arquivo, se fornecido
+  })
   // Estado para armazenar o progresso do upload.
   const [progress, setProgress] = useState(0)
 
