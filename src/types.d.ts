@@ -45,3 +45,27 @@ interface AuthCredentials {
   /** Imagem do cartão universitário do usuário. */
   universityCard: string
 }
+
+/** Parâmetros para criação de um livro. */
+interface BookParams {
+  /** Título do livro. */
+  title: string
+  /** Autor do livro. */
+  author: string
+  /** Gênero do livro. */
+  genre: string
+  /** Avaliação do livro. */
+  rating: number
+  /** Capa do livro (URL). */
+  coverUrl: string
+  /** Cor da capa. */
+  coverColor: string
+  /** Descrição do livro. */
+  description: string
+  /** Número de cópias. */
+  totalCopies: number
+  /** Vídeo do livro (URL). */
+  videoUrl: string
+  /** Resumo do livro. */
+  summary: string
+}
