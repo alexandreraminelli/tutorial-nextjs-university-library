@@ -45,3 +45,33 @@ export const users = pgTable("users", {
   /** Data de criação da conta. */
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 })
+
+/** Tabela de livros. */
+export const books = pgTable("books", {
+  /** ID do livro. */
+  id: uuid("id").notNull().primaryKey().defaultRandom().unique(),
+  /** Título do livro. */
+  title: varchar("title", { length: 255 }).notNull(),
+  /** Autor do livro. */
+  author: varchar("author", { length: 255 }).notNull(),
+  /** Gênero do livro. */
+  genre: varchar("genre").notNull(),
+  /** Avaliação do livro. */
+  rating: integer("rating").notNull().default(1),
+  /** URL da capa do livro. */
+  coverUrl: text("cover_url").notNull(),
+  /** Cor da capa no formato hexadecimal (#RRGGBB) */
+  coverColor: varchar("cover_color", { length: 7 }).notNull(),
+  /** Descrição do livro. */
+  description: text("description").notNull(),
+  /** Cópias totais do livro. */
+  totalCopies: integer("total_copies").notNull().default(1),
+  /** Cópias do livro disponíveis para empréstimo. */
+  availableCopies: integer("available_copies").notNull().default(0),
+  /** URL do vídeo do livro. */
+  videoUrl: text("video_url").notNull(),
+  /** Resumo do livro. */
+  summary: varchar("summary").notNull(),
+  /** Data de inserção do livro no sistema. */
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+})
