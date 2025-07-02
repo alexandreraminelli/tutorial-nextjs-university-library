@@ -71,3 +71,11 @@ interface BookParams {
   /** Resumo do livro. */
   summary: string
 }
+
+/** Parâmetros da função `borrowBook`. */
+interface BorrowBookParams {
+  /** ID do livro a ser emprestado. */
+  bookId: string
+  /** ID do usuário que está emprestando o livro. */
+  userId: string
+}
