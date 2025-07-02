@@ -46,15 +46,15 @@ async function seed() {
     // Iterar JSON com os livros
     for (const book of dummyBooks) {
       // Upload das imagens
-      const cover_url = (await uploadToImageKit(book.coverUrl, `${book.title}.jpg`, "/books/covers/")) as string
+      const coverUrl = (await uploadToImageKit(book.coverUrl, `${book.title}.jpg`, "/books/covers/")) as string
       // Upload dos vídeos
-      const video_url = (await uploadToImageKit(book.videoUrl, `${book.title}.mp4`, "/books/videos/")) as string
+      const videoUrl = (await uploadToImageKit(book.videoUrl, `${book.title}.mp4`, "/books/videos/")) as string
 
       // Inserir livros no db
       await db.insert(books).values({
         ...book,
-        cover_url,
-        video_url,
+        coverUrl,
+        videoUrl,
       })
     }
 
