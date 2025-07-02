@@ -1,5 +1,6 @@
 import { auth } from "@/auth"
 import BookOverview from "@/components/BookOverview"
+import BookVideo from "@/components/BookVideo"
 import { db } from "@/database/drizzle"
 import { books } from "@/database/schema"
 import { eq } from "drizzle-orm"
@@ -37,7 +38,7 @@ export default async function BookDetailsPage(
           {/* Vídeo do livro */}
           <section className="flex flex-col gap-7">
             <BookDetailsH3>Video</BookDetailsH3>
-            VIDEO COMPONENT
+            <BookVideo videoUrl={bookDetails.videoUrl} />
           </section>
 
           {/* Resumo do livro */}
