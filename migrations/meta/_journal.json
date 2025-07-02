@@ -15,6 +15,13 @@
       "when": 1751403771497,
       "tag": "0001_wakeful_ben_urich",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1751491073396,
+      "tag": "0002_brown_tomorrow_man",
+      "breakpoints": true
     }
   ]
 }
