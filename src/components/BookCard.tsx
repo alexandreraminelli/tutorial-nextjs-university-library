@@ -6,7 +6,7 @@ import Image from "next/image"
 
 /** Card de livro. */
 export default function BookCard(
-  { id, title, genre, color, cover, isLoanedBook = false }: Book // props
+  { id, title, genre, coverColor, coverUrl, isLoanedBook = false }: Book // props
 ) {
   return (
     <li className={cn(isLoanedBook && "xs:w-52 w-full")}>
@@ -17,7 +17,7 @@ export default function BookCard(
         className={cn(isLoanedBook && "w-full flex flex-col items-center")}
       >
         {/* Imagem da capa */}
-        <BookCover coverColor={color} coverImage={cover} />
+        <BookCover coverColor={coverColor} coverImage={coverUrl} />
 
         {/* Informações do livro */}
         <div className={cn("mt-4", !isLoanedBook && "xs:max-w-40 max-w-28")}>

@@ -4,7 +4,7 @@ import Image from "next/image"
 
 /** Informações gerais sobre um livro. */
 export default function BookOverview(
-  { title, author, genre, rating, total_copies, available_copies, description, color, cover }: Book // props
+  { title, author, genre, rating, totalCopies, availableCopies, description, coverColor, coverUrl }: Book // props
 ) {
   return (
     <section className="book-overview">
@@ -32,10 +32,10 @@ export default function BookOverview(
         {/* Informação de copias disponíveis */}
         <div className="book-copies">
           <p>
-            Total Books: <span>{total_copies}</span>
+            Total Books: <span>{totalCopies}</span>
           </p>
           <p>
-            Available Books: <span>{available_copies}</span>
+            Available Books: <span>{availableCopies}</span>
           </p>
         </div>
 
@@ -54,11 +54,11 @@ export default function BookOverview(
       <div className="relative flex flex-1 justify-center">
         {/* Imagem normal */}
         <div className="relative">
-          <BookCover variant="wide" className="z-10" coverColor={color} coverImage={cover} />
+          <BookCover variant="wide" className="z-10" coverColor={coverColor} coverImage={coverUrl} />
         </div>
         {/* "Sombra" da imagem */}
         <div className="absolute left-16 top-10 rotate-12 opacity-40 max-sm:hidden">
-          <BookCover variant="wide" coverColor={color} coverImage={cover} />
+          <BookCover variant="wide" coverColor={coverColor} coverImage={coverUrl} />
         </div>
       </div>
     </section>

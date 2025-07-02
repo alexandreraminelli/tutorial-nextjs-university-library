@@ -1,6 +1,9 @@
+"use client"
+
 import { cn } from "@/lib/utils"
-import Image from "next/image"
+import { IKImage } from "imagekitio-next"
 import BookCoverSvg from "./BookCoverSvg"
+import config from "@/lib/config"
 
 /** Variações de estilos da capa. */
 type BookCoverVariant = "extraSmall" | "small" | "medium" | "regular" | "wide"
@@ -41,7 +44,15 @@ export default function BookCover(
       <BookCoverSvg coverColor={coverColor} />
       {/* Imagem da capa */}
       <div className="absolute z-10" style={{ left: "12%", width: "87.5%", height: "88%" }}>
-        <Image src={coverURL} alt="Book cover" fill className="rounded-sm object-fill" />
+        <IKImage
+          path={coverURL} // Caminho da imagem no ImageKit
+          urlEndpoint={config.env.imagekit.urlEndpoint} // URL do endpoint do ImageKit
+          alt="Book cover"
+          fill
+          className="rounded-sm object-fill"
+          loading="lazy" // Carrega a imagem de forma assíncrona
+          lqip={{ active: true }} // Low-Quality Image Placeholder: carrega uma versão de baixa qualidade da imagem antes da versão completa
+        />
       </div>
     </div>
   )
