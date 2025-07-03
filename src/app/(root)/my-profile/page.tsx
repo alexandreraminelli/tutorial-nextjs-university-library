@@ -10,7 +10,7 @@ import { sampleBooks } from "@/constants"
 export default function MyProfilePage() {
   return (
     <>
-      // Opção de logout
+      {/* Opção de logout */}
       <form
         action={async () => {
           "use server"
@@ -20,6 +20,7 @@ export default function MyProfilePage() {
       >
         <Button>Logout</Button>
       </form>
+
       <BookList title="Borrowed Books" books={sampleBooks} />
     </>
   )
