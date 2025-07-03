@@ -1,11 +1,31 @@
-import { Button } from "@/components/ui/button"
 import BookCover from "@/components/BookCover"
+import { db } from "@/database/drizzle"
+import { users } from "@/database/schema"
+import { eq } from "drizzle-orm"
 import Image from "next/image"
+import BorrowBook from "./BorrowBook"
+
+/** Props de `BookOverview`. */
+interface Props extends Book {
+  /** ID do usuário. */
+  userId: string
+}
 
 /** Informações gerais sobre um livro. */
-export default function BookOverview(
-  { title, author, genre, rating, totalCopies, availableCopies, description, coverColor, coverUrl }: Book // props
+export default async function BookOverview(
+  { title, author, genre, rating, totalCopies, availableCopies, description, coverColor, coverUrl, id, userId }: Props // props
 ) {
+  // Buscar dados do usuário
+  const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1)
+  // Se o usuário não existir
+  if (!user) return null
+
+  // Se usuário pode pedir livros emprestados
+  const borrowingEligibility = {
+    isEligible: availableCopies > 0 && user.status === "APPROVED",
+    message: availableCopies <= 0 ? "Book is not available" : "You are not eligible to borrow this book",
+  }
+
   return (
     <section className="book-overview">
       <div className="flex flex-1 flex-col gap-5">
@@ -42,12 +62,8 @@ export default function BookOverview(
         {/* Descrição */}
         <p className="book-description">{description}</p>
 
-        {/* CTA Button */}
-        <Button className="book-overview_btn">
-          {/* Ícone de livro */}
-          <Image src="/icons/book.svg" alt="book" width={20} height={20}></Image>
-          <p className="font-bebas-neue text-xl text-dark-100c">Borrow Book</p>
-        </Button>
+        {/* Botão de Empréstimo */}
+        <BorrowBook bookId={id} userId={userId} borrowingEligibility={borrowingEligibility} />
       </div>
 
       {/* Capa do livro */}

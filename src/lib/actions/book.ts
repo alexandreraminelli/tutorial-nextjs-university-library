@@ -28,12 +28,15 @@ export async function borrowBook(params: BorrowBookParams) {
     const dueDate = dayjs().add(7, "day").toDate().toDateString()
 
     // Criar novo registro de empréstimo
-    const record = db.insert(borrowRecords).values({
-      userId,
-      bookId,
-      dueDate,
-      status: "BORROWED",
-    })
+    const [record] = await db
+      .insert(borrowRecords)
+      .values({
+        userId,
+        bookId,
+        dueDate,
+        status: "BORROWED",
+      })
+      .returning()
 
     // Atualizar o número de cópias disponíveis do livro
     await db
@@ -42,7 +45,7 @@ export async function borrowBook(params: BorrowBookParams) {
       .where(eq(books.id, bookId))
 
     // Retornar o registro de empréstimo criado
-    return { success: true, data: JSON.parse(JSON.stringify(record)) }
+    return { success: true, data: record }
   } catch (error) {
     console.error("Erro ao emprestar livro:", error)
     return { success: false, error: "An error occurred while borrowing the book." }
